@@ -5,12 +5,12 @@
       "name": "Stilinga kuprinė",
       "description": "Stilinga ir funkcionali kuprinė, kuri sujungia eleganciją ir praktiškumą. Pagaminta iš aukštos kokybės natūralios odos, ji užtikrina ilgaamžiškumą ir išskirtinį komfortą nešiojant. Kiekviena detalė – nuo kruopščiai susiūtų siūlių iki preciziškai pritaikytų metalinių akcentų – byloja apie nepriekaištingą meistriškumą.",
       "price": "50,00 €",
-      "main_image": "img/5.jpg",
+      "main_image": "https://riverflow8.github.io/5.jpg",
       "small_images": [
-          "img/1.jpg",
-          "img/2.jpg",
-          "img/3.jpg",
-          "img/4.png"
+          "https://riverflow8.github.io/1.jpg",
+          "https://riverflow8.github.io/2.jpg",
+          "https://riverflow8.github.io/3.jpg",
+          "https://riverflow8.github.io/4.png"
       ]
   }
   ],
@@ -20,12 +20,12 @@
           "name": "Stilinga rankinė",
           "description": "Stilinga rankinė, pagaminta iš natūralios odos, idealiai tinka tiek kasdienai, tiek ypatingoms progoms. Kiekviena siūlė kruopščiai susiūta rankomis, užtikrinant aukštą kokybę ir ilgaamžiškumą. Kompaktiška, tačiau talpi – puikiai tilps svarbiausi daiktai. Moderni forma su subtiliomis detalėmis pabrėžia eleganciją, o nuimama metalinė grandinėlė suteikia universalumo – nešiokite kaip delninę arba per petį. Matmenys: 24 cm x 15cm x 10 cm. Grandinėlės ilgis: 1 m.",
           "price": "80,00 €",
-          "main_image": "img/20250107_113124.jpg",
+          "main_image": "https://riverflow8.github.io/20250107_113124.jpg",
           "small_images": [
-              "img/20250107_113729.jpg",
-              "img/20250107_113836.jpg",
-              "img/20250107_114115.jpg",
-              "img/20250107_113125.png"
+              "https://riverflow8.github.io/20250107_113729.jpg",
+              "https://riverflow8.github.io/20250107_113836.jpg",
+              "https://riverflow8.github.io/20250107_114115.jpg",
+              "https://riverflow8.github.io/20250107_113125.png"
           ]
       }
   ],
@@ -35,12 +35,12 @@
       "name": "Rankinė - krepšys",
       "description": "Elegantiška ir praktiška rankinė-krepšys, sukurta šiuolaikiškai moteriai. Pagaminta iš aukštos kokybės natūralios odos, ji išsiskiria savo ilgaamžiškumu ir rafinuotu dizainu. Minkšta, tačiau tvirta struktūra suteikia rankinei universalumo – ji išlaiko formą, bet tuo pačiu prisitaiko prie jūsų poreikių. Erdvus vidus leidžia patogiai sutalpinti visus būtiniausius daiktus – nuo kasdienių smulkmenų iki dokumentų ar net nešiojamojo kompiuterio. Elegantiškos rankenos patogiai gula į delną, o papildomas ilgas dirželis suteikia galimybę rankinę nešioti per petį. Minimalistinės detalės ir aukštos kokybės metalinės detalės suteikia prabangos pojūtį.",
       "price": "40,00 €",
-      "main_image": "img/krepsiai.png",
+      "main_image": "https://riverflow8.github.io/krepsiai.png",
       "small_images": [
-          "img/krepsiai_1.png",
-          "img/krepsiai_2.png",
-          "img/krepsiai_3.png",
-          "img/krepsiai_4.png"
+          "https://riverflow8.github.io/krepsiai_1.png",
+          "https://riverflow8.github.io/krepsiai_2.png",
+          "https://riverflow8.github.io/krepsiai_3.png",
+          "https://riverflow8.github.io/krepsiai_4.png"
       ]
   }
   ],
@@ -50,12 +50,12 @@
       "name": "Talpi kosmetinė",
       "description": "Stilinga ir talpi kosmetinė – jūsų grožio ritualų palydovė. Pagaminta iš aukštos kokybės medžiagų, ji ne tik atrodo elegantiškai, bet ir yra itin patvari. Minkšta, tačiau išlaikanti formą, todėl jūsų kosmetika visuomet bus tvarkingai sudėta. Erdvus pagrindinis skyrius ir papildomos kišenėlės leidžia patogiai organizuoti makiažo priemones, teptukus ar kitus būtinus aksesuarus. Patikimas užtrauktukas užtikrina saugumą, o kompaktiškas dizainas leidžia lengvai tilpti tiek į rankinę, tiek į kelioninį krepšį.",
       "price": "20,00 €",
-      "main_image": "img/kosmetine_main.png",
+      "main_image": "https://riverflow8.github.io/kosmetine_main.png",
       "small_images": [
-          "img/kosmetine_1.png",
-          "img/kosmetine_2.png",
-          "img/kosmetine_3.png",
-          "img/kosmetine_4.png"
+          "https://riverflow8.github.io/kosmetine_1.png",
+          "https://riverflow8.github.io/kosmetine_2.png",
+          "https://riverflow8.github.io/kosmetine_3.png",
+          "https://riverflow8.github.io/kosmetine_4.png"
       ]
   }
     ]
