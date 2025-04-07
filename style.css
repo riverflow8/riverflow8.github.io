@@ -103,7 +103,7 @@ body {
 }
 
 #hero {
-    background-image: url("img/firsthero.png");
+    background-image: url("https://riverflow8.github.io/firsthero.png");
     height: 90vh;
     width: 100%;
     background-size: cover;
