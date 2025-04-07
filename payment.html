@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Internal Assessment - Payment</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <section id="header">
+        <a href="#" class="logo-container">
+            <img src="img/logo.png" class="logo" alt="">
+        </a>
+        <div>
+            <ul id="navbar">
+                <li> <a href="index.html">Pradžia</a></li>
+                <li> <a href="apie.html">Apie</a></li>
+                <li id="lg-bag"> <a class="active" href="cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a></li>
+                <a href="#" id="close"><i class="far fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+    
+    <section id="payment-container">
+        <section id="payment" class="section-p1">
+            <form id="paymentForm">
+                <label for="email">El. Paštas:</label>
+                <input type="email" id="email" name="email" required>
+
+                <h2>Pristatymas</h2>
+                <hr>
+
+                <label for="name">Vardas:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="surname">Pavardė:</label>
+                <input type="text" id="surname" name="surname" required>
+
+                <label for="number">Telefono numeris:</label>
+                <input type="text" id="number" name="number" required>
+
+                <label for="shippingMethod">Pristatymo būdas:</label>
+                <select id="shippingMethod" name="shippingMethod" required>
+                    <option value="LP Express">LP Express</option>
+                    <option value="Omniva">Omniva</option>
+                    <option value="Paštas">Paštas</option>
+                </select>
+
+                <div id="shippingDetails"></div>
+
+                <h2>Apmokėjimas</h2>
+                <hr>
+
+                <p>Banko sąskaita: ...</p>
+                <p>Gavėjas: ...</p>
+                <p>Paskirtis: <span id="orderNumber"></span></p>
+
+                <button type="submit"><p>Tęsti</p></button>
+            </form>
+        </section>
+    
+        <section id="cartOverall" class="section-p1">
+           <div class="cartOverall-items">
+            <h1>Krepšelio suvestinė</h1>
+            <p>Suma: <span id="sumAmount">0€</span></p>
+            <p>Pristatymas: 
+                <span id="shippingCost">0€</span>
+            </p>
+            <hr>
+            <p>Viso: <span id="totalAmount">0€</span></p>
+           </div>
+        </section>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="img/logo.png" alt="">
+        </div>
+
+        <div class="col">
+            <h4>Prekės</h4>
+            <a href="kuprines.html">Kuprinės</a>
+            <a href="kosmetines.html">Kosmetinės</a>
+            <a href="krepsiai.html">Krepšiai</a>
+            <a href="rankines.html">Rankinės</a>
+        </div>
+
+        <div class="col">
+            <h4>Informacija</h4>
+            <a href="apie.html">Apie mus</a>
+        </div>
+
+        <div class="col">
+            <div class ="follow">
+                <div class="icon">
+                    <a href="https://www.facebook.com/moliuqs" target="_blank" rel="noopener noreferrer" >
+                    <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/moliuqs/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartSummary();
+
+            document.getElementById('shippingMethod').addEventListener('change', updateShippingDetails);
+
+            document.getElementById('paymentForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                saveOrderDetails();
+                window.location.href = 'end.html';
+            });
+
+            const orderNumber = generateOrderNumber();
+            document.getElementById('orderNumber').textContent = orderNumber;
+        });
+
+        function updateCartSummary() {
+            const sumAmount = document.getElementById('sumAmount');
+            const shippingCost = document.getElementById('shippingCost');
+            const totalAmount = document.getElementById('totalAmount');
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const shippingMethod = document.getElementById('shippingMethod').value;
+
+            let sum = 0;
+            cart.forEach(product => {
+                const price = parseFloat(product.price.replace(',', '.'));
+                const itemTotal = price * product.quantity;
+                sum += itemTotal;
+            });
+
+            const shippingCostValue = getShippingCost(shippingMethod);
+            sumAmount.textContent = `${sum.toFixed(2)}€`;
+            shippingCost.textContent = `${shippingCostValue}€`;
+            totalAmount.textContent = `${(sum + shippingCostValue).toFixed(2)}€`;
+        }
+
+        function getShippingCost(method) {
+            switch (method) {
+                case 'LP Express':
+                case 'Omniva':
+                    return 3;
+                case 'Paštas':
+                    return 5;
+                default:
+                    return 0;
+            }
+        }
+
+        function updateShippingDetails() {
+            const shippingMethod = document.getElementById('shippingMethod').value;
+            const shippingDetails = document.getElementById('shippingDetails');
+
+            shippingDetails.innerHTML = '';
+            if (shippingMethod === 'LP Express' || shippingMethod === 'Omniva') {
+                const label = document.createElement('label');
+                label.textContent = 'Pasirinkite paštomatą:';
+                const select = document.createElement('select');
+                select.name = 'parcelLocation';
+                select.required = true;
+
+                if (shippingMethod === 'LP Express') {
+                    select.innerHTML = `
+                        <option value="LP1">LP Express 1</option>
+                        <option value="LP2">LP Express 2</option>
+                        <option value="LP3">LP Express 3</option>
+                    `;
+                } else {
+                    select.innerHTML = `
+                        <option value="Omniva1">Omniva 1</option>
+                        <option value="Omniva2">Omniva 2</option>
+                        <option value="Omniva3">Omniva 3</option>
+                    `;
+                }
+                shippingDetails.appendChild(label);
+                shippingDetails.appendChild(select);
+            } else if (shippingMethod === 'Paštas') {
+                const label = document.createElement('label');
+                label.textContent = 'Įveskite adresą:';
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'address';
+                input.required = true;
+                shippingDetails.appendChild(label);
+                shippingDetails.appendChild(input);
+            }
+
+            updateCartSummary();
+        }
+
+        function generateOrderNumber() {
+            return 'ORD' + Math.floor(Math.random() * 1000000);
+        }
+
+        function saveOrderDetails() {
+            const orderDetails = {
+                email: document.getElementById('email').value,
+                name: document.getElementById('name').value,
+                surname: document.getElementById('surname').value,
+                number: document.getElementById('number').value,
+                shippingMethod: document.getElementById('shippingMethod').value,
+                shippingDetails: document.getElementById('shippingDetails').innerText,
+                orderNumber: document.getElementById('orderNumber').textContent,
+                totalAmount: document.getElementById('totalAmount').textContent
+            };
+
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(orderDetails);
+            localStorage.setItem('orders', JSON.stringify(orders));
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

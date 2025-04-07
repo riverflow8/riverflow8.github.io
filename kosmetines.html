@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Internal Assessment</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <section id="header">
+        <a href="#" class="logo-container">
+            <img src="img/logo.png" class="logo" alt="">
+        </a>
+        <div>
+            <ul id="navbar">
+                <li> <a href="index.html">Pradžia</a></li>
+                <li> <a href="apie.html">Apie</a></li>
+                <li id="lg-bag"> <a href="cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a></li>
+                <a href="#" id="close"><i class="far fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <section id="product1" class="section-p1">
+        <h2>Kosmetinės</h2>
+        <hr>
+        <div class="pro-container" id="product-container">
+           
+        </div>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="img/logo.png" alt="">
+        </div>
+
+        <div class="col">
+            <h4>Prekės</h4>
+            <a href="kuprines.html">Kuprinės</a>
+            <a href="kosmetines.html">Kosmetinės</a>
+            <a href="krepsiai.html">Krepšiai</a>
+            <a href="rankines.html">Rankinės</a>
+        </div>
+
+        <div class="col">
+            <h4>Informacija</h4>
+            <a href="apie.html">Apie mus</a>
+        </div>
+
+        <div class="col">
+            <div class="follow">
+                <div class="icon">
+                    <a href="https://www.facebook.com/moliuqs" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/moliuqs/" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const productContainer = document.getElementById('product-container');
+            const response = await fetch('products.json');
+            const data = await response.json();
+            const products = data.kosmetines; 
+    
+            products.forEach(product => {
+                const productBox = document.createElement('div');
+                productBox.classList.add('product');
+                productBox.innerHTML = `
+                    <a href="sproduct.html?id=${product.id}">
+                        <img src="${product.main_image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.price}</p>
+                    </a>
+                `;
+                productContainer.appendChild(productBox);
+            });
+        });
+    </script>
+</body>
+</html>

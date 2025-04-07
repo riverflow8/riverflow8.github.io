@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Internal Assessment</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <section id="header">
+        <a href="#" class="logo-container">
+            <img src="img/logo.png" class="logo" alt="">
+        </a>
+        <div>
+            <ul id="navbar">
+                <li> <a  href="index.html">Pradžia</a></li>
+                <li> <a href="apie.html">Apie</a></li>
+                <li id="lg-bag"> <a class="active" href="cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a></li>
+                <a href="#" id="close"><i class="far fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+    
+    <section id="cart-container" >
+        <section id="cart" class="section-p1">
+            <table width="100%">
+               <tbody id="cartItems">
+                
+               </tbody>
+            </table>
+        </section>
+    
+        <section id="cartOverall" class="section-p1">
+           <div class="cartOverall-items">
+            <h1>Krepšelio suvestinė</h1>
+            <p>Suma: <span id="sumAmount">0€</span></p>
+            <p>Pristatymas: 
+                <select id="shippingMethod">
+                    <option value="3">LP Express (3€)</option>
+                    <option value="3">Omniva (3€)</option>
+                    <option value="5">Paštas (5€)</option>
+                </select>
+            </p>
+            <hr>
+            <p>Viso: <span id="totalAmount">0€</span></p>
+            <button id="proceedToPayment"><p>Tęsti</p></button>
+           </div>
+        </section>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="img/logo.png" alt="">
+        </div>
+
+        <div class="col">
+            <h4>Prekės</h4>
+            <a href="kuprines.html">Kuprinės</a>
+            <a href="kosmetines.html">Kosmetinės</a>
+            <a href="krepsiai.html">Krepšiai</a>
+            <a href="rankines.html">Rankinės</a>
+        </div>
+
+        <div class="col">
+            <h4>Informacija</h4>
+            <a href="apie.html">Apie mus</a>
+        </div>
+
+        <div class="col">
+            <div class ="follow">
+                <div class="icon">
+                    <a href="https://www.facebook.com/moliuqs" target="_blank" rel="noopener noreferrer" >
+                    <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/moliuqs/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <script>
+        function updateCart() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItems = document.getElementById('cartItems');
+            const sumAmount = document.getElementById('sumAmount');
+            const totalAmount = document.getElementById('totalAmount');
+            const shippingMethod = document.getElementById('shippingMethod');
+            
+            cartItems.innerHTML = '';
+            let sum = 0;
+
+            cart.forEach(product => {
+                const price = parseFloat(product.price.replace(',', '.'));
+                const itemTotal = price * product.quantity;
+                sum += itemTotal;
+
+                const itemRow = document.createElement('tr');
+                itemRow.innerHTML = `
+                    <td><img src="${product.main_image}" alt=""></td>
+                    <td>${product.name}</td>
+                    <td>${price.toFixed(2)}€</td>
+                    <td><input type="number" value="${product.quantity}" min="1" data-id="${product.id}"></td>
+                    <td><button data-id="${product.id}" class="removeItem"><i class="far fa-times-circle"></i> Remove</button></td>
+                `;
+                cartItems.appendChild(itemRow);
+            });
+
+            sumAmount.textContent = `${sum.toFixed(2)}€`;
+            const shippingCost = parseInt(shippingMethod.value);
+            totalAmount.textContent = cart.length > 0 ? `${(sum + shippingCost).toFixed(2)}€` : '0€';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCart();
+
+            document.getElementById('cartItems').addEventListener('change', (e) => {
+                if (e.target.type === 'number') {
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const productId = parseInt(e.target.getAttribute('data-id'));
+                    const product = cart.find(p => p.id === productId);
+                    if (product) {
+                        product.quantity = parseInt(e.target.value);
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        updateCart();
+                    }
+                }
+            });
+
+            document.getElementById('cartItems').addEventListener('click', (e) => {
+                if (e.target.closest('.removeItem')) {
+                    e.preventDefault();
+                    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const productId = parseInt(e.target.closest('.removeItem').getAttribute('data-id'));
+                    const updatedCart = cart.filter(p => p.id !== productId);
+                    localStorage.setItem('cart', JSON.stringify(updatedCart));
+                    updateCart();
+                }
+            });
+
+            document.getElementById('shippingMethod').addEventListener('change', () => {
+                updateCart();
+            });
+
+            document.getElementById('proceedToPayment').addEventListener('click', () => {
+                window.location.href = 'payment.html';
+            });
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>

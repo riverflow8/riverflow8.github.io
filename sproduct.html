@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Internal Assessment</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    
+    <section id="header">
+        <a href="#" class="logo-container">
+            <img src="img/logo.png" class="logo" alt="">
+        </a>
+        <div>
+            <ul id="navbar">
+                <li> <a href="index.html">Pradžia</a></li>
+                <li> <a href="apie.html">Apie</a></li>
+                <li id="lg-bag"> <a href="cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a></li>
+                <a href="#" id="close"><i class="far fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <section id="prodetails" class="section-p1">
+        <div class="single-pro-image">
+            <img src="img/1.jpg" width="100%" id="MainImg" alt="">
+
+            <div class="small-img-group"> 
+                <div class="small-img-col">
+                    <img src="img/1.jpg" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="img/2.jpg" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="img/3.jpg" width="100%" class="small-img" alt="">
+                </div>
+                <div class="small-img-col">
+                    <img src="img/4.jpg" width="100%" class="small-img" alt="">
+                </div>
+            </div>
+        </div> 
+
+        <div class="single-pro-details">
+            <h4> Kuprinė </h4>
+            <hr>
+            <span> Kuprinė yra tokia ir tokia, ji pasižymi tuo ir tuo. Ji sukurta atlikti pagrindinę kuprines funkciją, kuri bus naudinga jums ir naudinga jums. Klientui svarbu, kad kuprinė būtų tvari ir stilinga. </span>
+            <h2>50, 00 €</h2>
+            <button class="normal" id="addToCartBtn"> Į krepšelį <i class="fa-solid fa-bag-shopping"></i></button>
+        </div>
+    </section>
+
+    <footer class="section-p1">
+        <div class="col">
+            <img class="logo" src="img/logo.png" alt="">
+        </div>
+
+        <div class="col">
+            <h4>Prekės</h4>
+            <a href="kuprines.html">Kuprinės</a>
+            <a href="kosmetines.html">Kosmetinės</a>
+            <a href="krepsiai.html">Krepšiai</a>
+            <a href="rankines.html">Rankinės</a>
+        </div>
+
+        <div class="col">
+            <h4>Informacija</h4>
+            <a href="apie.html">Apie mus</a>
+        </div>
+
+        <div class="col">
+            <div class ="follow">
+                <div class="icon">
+                    <a href="https://www.facebook.com/moliuqs" target="_blank" rel="noopener noreferrer" >
+                    <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/moliuqs/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+    <script>
+        var MainImg = document.getElementById("MainImg");
+        var smallImg = document.getElementsByClassName("small-img");
+
+        for(let i = 0; i < smallImg.length; i++) {
+            smallImg[i].onclick = function() {
+                let tempSrc = MainImg.src;
+                MainImg.src = smallImg[i].src;
+                smallImg[i].src = tempSrc;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = parseInt(urlParams.get('id'));
+            const response = await fetch('products.json');
+            const data = await response.json();
+            const categories = ['kuprines', 'rankines', 'krepsiai', 'kosmetines'];
+            let product;
+
+            for (const category of categories) {
+                product = data[category].find(p => p.id === productId);
+                if (product) break;
+            }
+
+            if (product) {
+                document.querySelector('.single-pro-image img').src = product.main_image;
+                const smallImages = document.querySelectorAll('.small-img-group .small-img-col img');
+                product.small_images.forEach((img, index) => {
+                    if (smallImages[index]) {
+                        smallImages[index].src = img;
+                    }
+                });
+
+                document.querySelector('.single-pro-details h4').textContent = product.name;
+                document.querySelector('.single-pro-details span').textContent = product.description;
+                document.querySelector('.single-pro-details h2').textContent = product.price;
+
+                document.getElementById('addToCartBtn').addEventListener('click', () => {
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    const existingProduct = cart.find(p => p.id === product.id);
+                    if (existingProduct) {
+                        existingProduct.quantity += 1;
+                    } else {
+                        product.quantity = 1;
+                        cart.push(product);
+                    }
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    alert('Product added to cart!');
+                });
+            }
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
